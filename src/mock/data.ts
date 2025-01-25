@@ -1,0 +1,58 @@
+export const cards: string[] = [
+    '1s', '1h', '1d', '1c',
+    '2s', '2h', '2d', '2c',
+    '3s', '3h', '3d', '3c',
+    '4s', '4h', '4d', '4c',
+    '5s', '5h', '5d', '5c',
+    '6s', '6h', '6d', '6c',
+    '7s', '7h', '7d', '7c',
+    '8s', '8h', '8d', '8c',
+    '9s', '9h', '9d', '9c',
+    'Ts', 'Th', 'Td', 'Tc',
+    'Js', 'Jh', 'Jd', 'Jc',
+    'Qs', 'Qh', 'Qd', 'Qc',
+    'Ks', 'Kh', 'Kd', 'Kc',
+    'As', 'Ah', 'Ad', 'Ac'
+];
+
+export const cardHands: string[] = [
+    'Straight Flush',
+    'Royal Flush',
+    'Natural Royal Flush',
+    'Natural Royal Flush',
+    'Five of a Kind',
+    'Four of a Kind with Pair or Better',
+    'Four of a Kind',
+    'Four Wild Cards',
+    'Three of a Kind with Two Pair',
+    'Full House',
+    'Flush',
+    'Straight',
+    'Two Three Of a Kind',
+    'Three of a Kind',
+    'Three Pair',
+    'Two Pair',
+    'Pair',
+    'High Card',
+]
+
+// export const cardHands = new Map<number, string>([
+//     [1, 'Straight Flush'],
+//     [2, 'Royal Flush'],
+//     [3, 'Natural Royal Flush'],
+//     [4, 'Natural Royal Flush'],
+//     [5, 'Five of a Kind'],
+//     [6, 'Four of a Kind with Pair or Better'],
+//     [7, 'Four of a Kind'],
+//     [8, 'Four Wild Cards'],
+//     [9, 'Three of a Kind with Two Pair'],
+//     [10, 'Full House'],
+//     [11, 'Flush'],
+//     [12, 'Straight'],
+//     [13, 'Two Three Of a Kind'],
+//     [14, 'Three of a Kind'],
+//     [15, 'Three Pair'],
+//     [16, 'Two Pair'],
+//     [17, 'Pair'],
+//     [18, 'High Card']
+// ]);
