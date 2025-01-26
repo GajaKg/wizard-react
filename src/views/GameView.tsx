@@ -41,7 +41,7 @@ const GameView: FC = () => {
 
   const onAnswerSelected = (answer: string): void => {
     if (timer.timesUp) return;
-    
+
     let correctAnswer = false;
     setIsDirty(true);
 
@@ -100,12 +100,16 @@ const GameView: FC = () => {
 
       {/****** Links ******/}
       {timer.timesUp && <div className="mt-6 text-center">
-        <Link to="/leaderboard" className="block text-blue-400">
-          Go to Leaderboard
-        </Link>
-        <Link to="/" className="block mt-2 text-blue-400">
-          Start New Game
-        </Link>
+        <div>
+          <Link to="/leaderboard" className="text-blue-400">
+            Go to Leaderboard
+          </Link>
+          </div>
+          <div>
+          <Link to="/" className="inline-block mt-2 text-blue-400">
+            Start New Game
+          </Link>
+          </div>
       </div>}
 
       {/****** Answers ******/}

@@ -46,7 +46,9 @@ const Leaderboard: FC = () => {
       </ul>}
       {!copyLeaderboard.length && <p className="text-center">No attempts</p>}
 
-      <Link to={"/"} className="block mt-10 text-center text-blue-300">New game</Link>
+      <div className="text-center">
+        <Link to={"/"} className="inline-block mt-10 text-blue-300">New game</Link>
+      </div>
     </Card >
   );
 };
