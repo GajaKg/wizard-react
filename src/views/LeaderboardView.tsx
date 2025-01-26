@@ -2,6 +2,7 @@ import { useState, type FC } from "react";
 import { Card } from 'primereact/card';
 import { useAppSelector } from "../store/hooks";
 import { type Leaderboard } from "../store/gameSlice";
+import { Link } from "react-router";
 
 const Leaderboard: FC = () => {
   const leaderboard = useAppSelector((state) => state.game.leaderboard);
@@ -44,12 +45,15 @@ const Leaderboard: FC = () => {
           Best of
         </button>
       </div>
-      <h2 className="mb-2 text-2xl font-semibold">{showLeaderboard ? "Leaderboard" : "Best of"}: </h2>
-      <ul
-        className="max-w-md text-xl space-y-1 text-green-400 list-disc list-inside dark:text-green-400"
+      <h2 className="mb-2 text-2xl font-semibold text-center">{showLeaderboard ? "Leaderboard" : "Best of"}: </h2>
+      {leaderboardData.length > 0 && <ul
+        className="max-w-md text-xl space-y-1 text-center text-green-400 list-decimal list-inside dark:text-green-400"
       >
         {LeaderboardList}
-      </ul>
+      </ul>}
+      {!leaderboardData.length && <p className="text-center">No attempts</p>}
+
+      <Link to={"/"} className="block mt-10 text-center text-blue-300">New game</Link>
     </Card >
   );
 };
