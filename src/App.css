@@ -1,0 +1,7 @@
+.answers-list > div:not(:last-child) {
+    margin-bottom: 10px;
+  }
+  .game-over > div {
+    cursor: default;
+    opacity: 0.4;
+  }
