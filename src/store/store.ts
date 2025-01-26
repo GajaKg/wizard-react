@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
-// import schedulerReducer from '../features/scheduler/store/schedulerSlice'
+import gameReducer from './gameSlice'
 
 export const store = configureStore({
   reducer: {
-    // scheduler: schedulerReducer
+    game: gameReducer
   },
 })
 
