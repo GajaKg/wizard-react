@@ -7,17 +7,9 @@ import { Link } from "react-router";
 const Leaderboard: FC = () => {
   const leaderboard = useAppSelector((state) => state.game.leaderboard);
   const [showLeaderboard, setShowLeaderboard] = useState<boolean>(true);
+  const [copyLeaderboard, setCopyLeaderboard] = useState(JSON.parse(JSON.stringify(leaderboard)));
 
-  let leaderboardData = [];
-
-  if (showLeaderboard) {
-    leaderboardData = leaderboard;
-  } else {
-    const copyLeaderboard = JSON.parse(JSON.stringify(leaderboard));
-    leaderboardData = [...copyLeaderboard].sort((a, b) => b.score - a.score);
-  }
-
-  const LeaderboardList = leaderboardData.map((attempt: Leaderboard, i: number) => {
+  const LeaderboardList = copyLeaderboard.map((attempt: Leaderboard, i: number) => {
     return (
       <li key={i}>
         Attempt {attempt.counter} - {attempt.score} {attempt.score <= 1 ? "answer" : "answers"}
@@ -27,6 +19,7 @@ const Leaderboard: FC = () => {
 
   const toggleLeaderboard = (show: boolean) => {
     setShowLeaderboard(show);
+    setCopyLeaderboard(show ? leaderboard : [...copyLeaderboard].sort((a, b) => b.score - a.score))
   }
 
   return (
@@ -46,12 +39,12 @@ const Leaderboard: FC = () => {
         </button>
       </div>
       <h2 className="mb-2 text-2xl font-semibold text-center">{showLeaderboard ? "Leaderboard" : "Best of"}: </h2>
-      {leaderboardData.length > 0 && <ul
+      {copyLeaderboard.length > 0 && <ul
         className="max-w-md text-xl space-y-1 text-center text-green-400 list-decimal list-inside dark:text-green-400"
       >
         {LeaderboardList}
       </ul>}
-      {!leaderboardData.length && <p className="text-center">No attempts</p>}
+      {!copyLeaderboard.length && <p className="text-center">No attempts</p>}
 
       <Link to={"/"} className="block mt-10 text-center text-blue-300">New game</Link>
     </Card >

@@ -14,8 +14,8 @@ interface GameState {
 
 // Define the initial state using that type
 const initialState: GameState = {
-  // leaderboard: [],
-  leaderboard: [{ counter: 1, score: 5 }, { counter: 2, score: 3 }, { counter: 3, score: 4 }],
+  leaderboard: [],
+  // leaderboard: [{ counter: 1, score: 5 }, { counter: 2, score: 3 }, { counter: 3, score: 4 }],
 };
 
 export const gameSlice = createSlice({
@@ -24,7 +24,9 @@ export const gameSlice = createSlice({
   initialState,
   reducers: {
     addScore: (state, action: PayloadAction<any>) => {
-      state.leaderboard.push(action.payload);
+      let attemptCounter = state.leaderboard.length;
+      attemptCounter++;
+      state.leaderboard.push({ counter: attemptCounter, score: action.payload });
     },
   },
 });

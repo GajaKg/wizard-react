@@ -10,17 +10,22 @@ import { game } from "../utils/Engine";
 import { Card as CardPoker, Hand as HandPoker } from "./Pokersolver"
 import { useTimer } from "../hooks/timer";
 import { iJoke, jokeService } from "../services/Joke.service";
+import { useAppDispatch } from "../store/hooks";
+import { addScore } from "../store/gameSlice";
 
 const GameView: FC = () => {
+
+  const dispatch = useAppDispatch();
 
   const timer = useTimer(15);
   const { handSolved, getAnswers } = game.handAndAnswers();
   const [hand, setHand] = useState<HandPoker>(handSolved)
   const [answers, setAnswers] = useState<string[]>(getAnswers)
   const [isDirty, setIsDirty] = useState<boolean>(false)
-  const [suddenDeath, setSuddenDeath] = useState<number>(10)
-  const [isCorrectAnswer, setIsCorrectAnswer] = useState<boolean>(false)
+  const [isCorrectAnswer, setIsCorrectAnswer] = useState<boolean>(false);
   const [joke, setJoke] = useState<iJoke | null>();
+  const [score, setScore] = useState<number>(0);
+  const suddenDeath: number = 10;
 
   const loadJoke = async () => {
     const newJoke = await jokeService.getJoke();
@@ -29,22 +34,26 @@ const GameView: FC = () => {
 
   useEffect(() => {
     if (timer.timesUp) {
-      setJoke(null)
+      setJoke(null);
+      dispatch(addScore(score))
     }
-  }, [timer.timesUp])
+  }, [timer.timesUp, dispatch, score, joke])
 
   const onAnswerSelected = (answer: string): void => {
     if (timer.timesUp) return;
-
-    setIsDirty(true)
+    
+    let correctAnswer = false;
+    setIsDirty(true);
 
     if (hand.name === answer) {
       setIsCorrectAnswer(true);
+      correctAnswer = true;
+      setScore((score) => score + 1)
     } else {
       setIsCorrectAnswer(false);
     }
 
-    timer.updateTime(isCorrectAnswer);
+    timer.updateTime(correctAnswer);
 
     const { handSolved, getAnswers } = game.handAndAnswers();
     setHand(handSolved);
