@@ -14,6 +14,7 @@ interface GameState {
 
 // Define the initial state using that type
 const initialState: GameState = {
+  // leaderboard: [],
   leaderboard: [{ counter: 1, score: 5 }, { counter: 2, score: 3 }, { counter: 3, score: 4 }],
 };
 

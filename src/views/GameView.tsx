@@ -2,14 +2,14 @@ import { useEffect, useState, type FC } from "react";
 import { Link } from "react-router";
 
 import { Card } from 'primereact/card';
-
 import CardBox from '../components/CardBox'
-import { game } from "../utils/Engine";
+import JokeShow from "../components/JokeShow";
 
-// @ts-expect-error asd
+import { game } from "../utils/Engine";
+// @ts-expect-error ---
 import { Card as CardPoker, Hand as HandPoker } from "./Pokersolver"
 import { useTimer } from "../hooks/timer";
-
+import { iJoke, jokeService } from "../services/Joke.service";
 
 const GameView: FC = () => {
 
@@ -20,6 +20,18 @@ const GameView: FC = () => {
   const [isDirty, setIsDirty] = useState<boolean>(false)
   const [suddenDeath, setSuddenDeath] = useState<number>(10)
   const [isCorrectAnswer, setIsCorrectAnswer] = useState<boolean>(false)
+  const [joke, setJoke] = useState<iJoke | null>();
+
+  const loadJoke = async () => {
+    const newJoke = await jokeService.getJoke();
+    setJoke(newJoke)
+  };
+
+  useEffect(() => {
+    if (timer.timesUp) {
+      setJoke(null)
+    }
+  }, [timer.timesUp])
 
   const onAnswerSelected = (answer: string): void => {
     if (timer.timesUp) return;
@@ -35,17 +47,11 @@ const GameView: FC = () => {
     timer.updateTime(isCorrectAnswer);
 
     const { handSolved, getAnswers } = game.handAndAnswers();
-    setHand(handSolved)
-    setAnswers(getAnswers)
+    setHand(handSolved);
+    setAnswers(getAnswers);
+
+    loadJoke()
   }
-
-  // useEffect(() => {
-  //   // dont display new cards if times up
-  //   if (timer.timesUp) {
-  //     return;
-  //   }
-
-  // }, [timer.timesUp])
 
   const AnswerList = answers.map((answer: string, i: number) => {
     return (
@@ -61,7 +67,7 @@ const GameView: FC = () => {
     <Card className="flex items-center justify-center flex-col m-auto w-full max-w-sm md:max-w-xl rounded shadow-xl p-4 overflow-auto" style={{ height: "80vh" }} >
       {/****** Timer ******/}
       <div
-        className={`${timer.counter < suddenDeath ? 'text-red-800 dark:text-red-800' : ''} mb-10 order-1 text-5xl font-extrabold leading-none text-blue-800 dark:text-blue-800 text-right`}
+        className={`${timer.counter < suddenDeath ? 'text-red-500 dark:text-red-500' : ''} mb-10 order-1 text-5xl font-extrabold leading-none text-blue-500 dark:text-blue-500 text-right`}
       >
         {timer.counter}
       </div>
@@ -74,7 +80,7 @@ const GameView: FC = () => {
       </div >
 
       {/******  Info ******/}
-      <div className={`${isCorrectAnswer && !timer.timesUp ? "text-green-500" : "text-red-500"} h-5 mt-4 font-bold text-center`}>
+      <div className={`${isCorrectAnswer && !timer.timesUp ? "text-green-500" : "text-red-500"} h-6 mt-4 font-bold text-center`}>
         {isDirty && !timer.timesUp && (<span>{
           isCorrectAnswer
             ? `Correct!! You gain ${timer.step} seconds`
@@ -96,6 +102,12 @@ const GameView: FC = () => {
       {/****** Answers ******/}
       <div className={`${timer.timesUp ? 'game-over' : ''} mt-10 answers-list`}>
         {AnswerList}
+      </div>
+
+      {/****** Joke ******/}
+      <div className=" h-10">
+        {joke && <JokeShow setup={joke?.setup} punchline={joke?.punchline} />}
+        <div className="mt-6 h-10 text-center">{!joke && isDirty && !timer.timesUp && '...loading'}</div>
       </div>
     </Card >
   );
