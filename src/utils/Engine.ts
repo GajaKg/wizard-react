@@ -1,7 +1,5 @@
 import { cards, cardHands } from "../mock/data.js";
-// //@ts-expect-error asd
-// import { Hand } from "pokersolver";
-
+// @ts-expect-error asd
 import { Hand } from "./Pokersolver"
 
 class Game {
