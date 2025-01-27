@@ -17,7 +17,7 @@ const GameView: FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const timer = useTimer(15);
+  const timer = useTimer(100);
   const { handSolved, getAnswers } = game.handAndAnswers();
   const [hand, setHand] = useState<HandPoker>(handSolved)
   const [answers, setAnswers] = useState<string[]>(getAnswers)
